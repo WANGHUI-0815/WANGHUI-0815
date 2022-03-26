@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>左右滚动图片</title>
+		<style type="text/css">
+			#slide{
+				width: 800px;
+				height: 100px;
+				border: 1px solid black;
+				margin: 100px auto;
+				overflow: hidden;
+				cursor: pointer;
+			}
+			.content{
+				width: 99999px;				
+			}
+			img{
+				width: 160px;
+				height: 100px;
+				margin-right: 10px;
+				float: left;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" name="btnLeft" id="btnLeft" value="←←" />
+		<input type="button" name="btnRight" id="btnRight" value="→→" />
+		<div id="slide">
+			<div class="content">
+				<img src="img/3.png"/>
+				<img src="img/2.png"/>
+				<img src="img/1.png"/>
+				<img src="img/6.png"/>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var slide = document.getElementById('slide');
+		var content = document.getElementsByClassName('content')[0];
+		var btnLeft = document.getElementById('btnLeft');
+		var btnRight = document.getElementById('btnRight');
+		content.innerHTML = content.innerHTML+content.innerHTML+content.innerHTML;
+		content.style.marginLeft = 0 +'px';
+		var stop = false;
+		var direction = 'left';
+		slide.onmouseenter = function(){
+			stop = true;
+		}
+		slide.onmouseleave = function(){
+			stop = false;
+		}
+		btnLeft.onclick = function(){
+			direction = 'left';
+		}
+		btnRight.onclick = function(){
+			direction = 'right';
+		}
+		roll();
+		function roll(){
+			var num = parseFloat(content.style.marginLeft);			
+			if(!stop){
+				if(direction=='left'){
+					num = num - 0.5;
+					if(num <= -170*4){
+						num = 0;
+					}
+				}else{
+					num = num + 0.5;
+					if(num >= 0){
+						num = -170*4;
+					}
+				}
+			}		
+			content.style.marginLeft = num +'px';			
+			setTimeout('roll()',13);			
+		}
+	</script>
+</html>
